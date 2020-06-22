@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Vehicle Search</string>
+    <string name="make_model">make_model</string>
+    <string name="description">description</string>
+    <string name="last_update">last_update</string>
+    <string name="price">price</string>
+    <string name="vehicle_image">vehicle_image</string>
+    <string name="vehicle_make">Vehicle Make</string>
+</resources>
