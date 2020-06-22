@@ -229,14 +229,9 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             HttpHandler sh = new HttpHandler();
 
-            //VehicleUtil.Vehicle newVehicle;
-
-
             newURL = availableURL + makeID + "/" + vModelID + "/" + zipCode;
 
-
-            VehicleUtil.Vehicle newVehicle = null;
-            List<VehicleUtil.Vehicle> recyclerViewHolder = null;
+            VehicleUtil.VEHICLE_LIST = new ArrayList<>(); // <<<<< THIS WILL HOLD THE CURRENT SELECTION OF THE MAKE AND MODEL
 
             String jsonStr = sh.makeServiceCall(newURL);
             if (jsonStr != null) {
@@ -261,20 +256,13 @@ public class MainActivity extends AppCompatActivity {
                         String vehicle_url = jsonObject.getString("vehicle_url");
                         String vin_number = jsonObject.getString("vin_number");
 
-                        newVehicle = new VehicleUtil.Vehicle(color, create_at, listID,
+                        VehicleUtil.Vehicle newVehicle = new VehicleUtil.Vehicle(color, create_at, listID,
                                 image_url, mileage, model, price, veh_description,
                                 vehicle_make, vehicle_url, vin_number);
 
-                        //VehicleUtil.Vehicle recyclerViewHold = new VehicleUtil.Vehicle();
-
-                        recyclerViewHolder = new ArrayList<>();
-                        recyclerViewHolder.add(newVehicle);
+                        newVehicle.setList(newVehicle);
 
                     }
-
-                    newVehicle.setList(recyclerViewHolder);
-
-
 
                 } catch (JSONException e) {
                     // if error, return 0 as false
@@ -298,10 +286,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-    public static class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewAdapter.ViewHolder> {
+    /*public static class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewAdapter.ViewHolder> {
 
         private final List<VehicleUtil.Vehicle> vehicleList;
 
@@ -334,7 +319,7 @@ public class MainActivity extends AppCompatActivity {
                         int vehicleChoice = holder.getAdapterPosition();
 
                     }
-                    else {*/
+                    else {
                         Context context = v.getContext();
                         Intent intent = new Intent(context, VehicleDetailActivity.class);
                         intent.putExtra(VehicleUtil.VEHICLE_IMAGE, holder.getAdapterPosition());
@@ -349,7 +334,7 @@ public class MainActivity extends AppCompatActivity {
             return vehicleList.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+        static class ViewHolder extends RecyclerView.ViewHolder {
             final View view;
             final TextView viewID;
             final TextView contentView;
@@ -362,5 +347,5 @@ public class MainActivity extends AppCompatActivity {
                 contentView = view.findViewById(R.id.content);
             }
         }
-    }
+    }*/
 }

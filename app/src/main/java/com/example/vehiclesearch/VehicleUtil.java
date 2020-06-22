@@ -17,6 +17,10 @@ public class VehicleUtil {
     public static final String DESCRIPTION = "description";
     public static final String LAST_UPDATE = "last_update";
 
+    public VehicleUtil(){
+        new VehicleUtil();
+    }
+
 
     public static class Vehicle{
 
@@ -25,7 +29,6 @@ public class VehicleUtil {
         int ID, mileage, price;
 
         public Vehicle(){
-            VEHICLE_LIST = new ArrayList<>();
         }
 
         public Vehicle(String color, String createdAt, int listID, String image_url,
@@ -45,8 +48,18 @@ public class VehicleUtil {
 
         }
 
-        public void setList(List<Vehicle> list){
-            VEHICLE_LIST = list;
+        public void setList(Vehicle list){
+            VEHICLE_LIST.add(list);
+        }
+
+        public String priceFormat(){
+            NumberFormat priceFormat = NumberFormat.getCurrencyInstance();
+            DecimalFormatSymbols setter = new DecimalFormatSymbols();
+            setter.setCurrencySymbol("$");
+            setter.setGroupingSeparator(',');
+            setter.setMonetaryDecimalSeparator('.');
+            ((DecimalFormat) priceFormat ).setDecimalFormatSymbols(setter);
+            return priceFormat.format(price);
         }
 
         public String getDisplayBar(){

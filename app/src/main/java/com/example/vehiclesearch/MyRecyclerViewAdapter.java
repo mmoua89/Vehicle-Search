@@ -1,6 +1,5 @@
 package com.example.vehiclesearch;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-/*public class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewAdapter.ViewHolder> {
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewAdapter.ViewHolder> {
 
     private final List<VehicleUtil.Vehicle> vehicleList;
 
@@ -34,7 +33,7 @@ import java.util.List;
     }
 
     @Override
-    public void onBindViewHolder(final MyRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.newVehicle = vehicleList.get(position);
         holder.viewID.setText(String.valueOf(position + 1));
         holder.contentView.setText(vehicleList.get(position).getDisplayBar());
@@ -42,16 +41,20 @@ import java.util.List;
         holder.view.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (isHasTwoPane){
-                    int vehicleChoice = holder.getAdapterPosition();
+                    /*if (isHasTwoPane){
+                        int vehicleChoice = holder.getAdapterPosition();        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FOR TWO PANES START HERE
 
-                }
-                else {
-                    Context context = v.getContext();
-                    Intent intent = new Intent(context, VehicleDetailActivity.class);
-                    intent.putExtra(VehicleUtil.VEHICLE_ID_KEY, holder.getAdapterPosition());
-                    context.startActivities(new Intent[]{intent});
-                }
+                    }
+                    else {*/
+                Context context = v.getContext();
+                Intent intent = new Intent(context, VehicleDetailActivity.class);
+                intent.putExtra(VehicleUtil.VEHICLE_IMAGE, holder.getAdapterPosition());
+                intent.putExtra(VehicleUtil.MAKE_MODEL, holder.getAdapterPosition());
+                intent.putExtra(VehicleUtil.PRICE, holder.getAdapterPosition());
+                intent.putExtra(VehicleUtil.DESCRIPTION, holder.getAdapterPosition());
+                intent.putExtra(VehicleUtil.LAST_UPDATE, holder.getAdapterPosition());
+                context.startActivities(new Intent[]{intent});
+                //}
             }
         });
     }
@@ -61,7 +64,7 @@ import java.util.List;
         return vehicleList.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         final View view;
         final TextView viewID;
         final TextView contentView;
@@ -74,4 +77,4 @@ import java.util.List;
             contentView = view.findViewById(R.id.content);
         }
     }
-}*/
+}
