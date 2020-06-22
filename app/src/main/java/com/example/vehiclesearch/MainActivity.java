@@ -229,11 +229,14 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             HttpHandler sh = new HttpHandler();
 
-            VehicleUtil.Vehicle newVehicle;
+            //VehicleUtil.Vehicle newVehicle;
 
 
             newURL = availableURL + makeID + "/" + vModelID + "/" + zipCode;
 
+
+            VehicleUtil.Vehicle newVehicle = null;
+            List<VehicleUtil.Vehicle> recyclerViewHolder = null;
 
             String jsonStr = sh.makeServiceCall(newURL);
             if (jsonStr != null) {
@@ -262,12 +265,17 @@ public class MainActivity extends AppCompatActivity {
                                 image_url, mileage, model, price, veh_description,
                                 vehicle_make, vehicle_url, vin_number);
 
-                        //Toast.makeText(context, vehicle_make, Toast.LENGTH_LONG).show();
+                        //VehicleUtil.Vehicle recyclerViewHold = new VehicleUtil.Vehicle();
 
-                        newVehicle.setList(newVehicle);
-
+                        recyclerViewHolder = new ArrayList<>();
+                        recyclerViewHolder.add(newVehicle);
 
                     }
+
+                    newVehicle.setList(recyclerViewHolder);
+
+
+
                 } catch (JSONException e) {
                     // if error, return 0 as false
                     e.printStackTrace();
@@ -281,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
 
             recyclerView.setAdapter(new MyRecyclerViewAdapter(VehicleUtil.VEHICLE_LIST, isHasTwoPane));
 
-            //Toast.makeText(context, newURL, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, newURL, Toast.LENGTH_LONG).show();
 
         }
     }
@@ -329,8 +337,8 @@ public class MainActivity extends AppCompatActivity {
                     else {*/
                         Context context = v.getContext();
                         Intent intent = new Intent(context, VehicleDetailActivity.class);
-                        intent.putExtra(VehicleUtil.VEHICLE_ID_KEY, holder.getAdapterPosition());
-                        context.startActivities(intent);
+                        intent.putExtra(VehicleUtil.VEHICLE_IMAGE, holder.getAdapterPosition());
+                        context.startActivities(new Intent[]{intent});
                     //}
                 }
             });

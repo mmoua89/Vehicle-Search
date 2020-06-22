@@ -9,9 +9,14 @@ import java.util.List;
 
 public class VehicleUtil {
 
-    public static List<Vehicle> VEHICLE_LIST = new ArrayList<>();
+    public static List<Vehicle> VEHICLE_LIST;
 
-    public static String VEHICLE_ID_KEY = "TESTING";
+    public static final String VEHICLE_IMAGE = "imageView";
+    public static final String MAKE_MODEL = "make_model";
+    public static final String PRICE = "price";
+    public static final String DESCRIPTION = "description";
+    public static final String LAST_UPDATE = "last_update";
+
 
     public static class Vehicle{
 
@@ -19,7 +24,9 @@ public class VehicleUtil {
                 vehicleMake, vehicleURL, vinNumber;
         int ID, mileage, price;
 
-        public Vehicle(){}
+        public Vehicle(){
+            VEHICLE_LIST = new ArrayList<>();
+        }
 
         public Vehicle(String color, String createdAt, int listID, String image_url,
                           int mileage, String model, int price, String veh_description,
@@ -35,10 +42,11 @@ public class VehicleUtil {
             this.ID = listID;
             this.mileage = mileage;
             this.price = price;
+
         }
 
-        public void setList(Vehicle list){
-            VEHICLE_LIST.add(list);
+        public void setList(List<Vehicle> list){
+            VEHICLE_LIST = list;
         }
 
         public String getDisplayBar(){
