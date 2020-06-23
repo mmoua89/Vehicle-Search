@@ -3,17 +3,21 @@ package com.example.vehiclesearch;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewAdapter.ViewHolder> {
+/*public class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewAdapter.ViewHolder> {
 
     //List of vehicle objects
     private final List<VehicleUtil.Vehicle> vehicleList;
@@ -55,7 +59,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewA
             public void onClick(View v) {
 
                 if (isHasTwoPane){
-                    int selectedImage = holder.getAdapterPosition();
+                    *//*int selectedImage = holder.getAdapterPosition();
                     int selectedMakeAndModel = holder.getAdapterPosition();
                     int selectedPrice = holder.getAdapterPosition();
                     int selectedDescription = holder.getAdapterPosition();
@@ -64,7 +68,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewA
                             selectedImage, selectedMakeAndModel, selectedPrice,
                             selectedDescription, selectedLastUpdate);
                     FragmentActivity myContext = null;
-                    FragmentManager fragManager = myContext.getSupportFragmentManager();
+                    FragmentManager fragManager = myContext.getSupportFragmentManager();*//*
+
+
+
 
                 }
                 else {
@@ -102,19 +109,19 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewA
         return vehicleList.size();
     }
 
-    /**
+    *//**
      * ViewHolder class that extend the RecyclerView
-     */
+     *//*
     static class ViewHolder extends RecyclerView.ViewHolder {
         final View view;
         final TextView viewID;
         final TextView contentView;
         VehicleUtil.Vehicle newVehicle;
 
-        /**
+        *//**
          * Assigning keys
          * @param itemView
-         */
+         *//*
         public ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
@@ -124,4 +131,18 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewA
     }
 
 
-}
+   *//* class Link extends AppCompatActivity {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.vehicle_list);
+
+            if (isHasTwoPane){
+                ImageView imageView = findViewById(R.id.imageView2);
+            }
+
+
+    }*//*
+
+}*/

@@ -23,6 +23,7 @@
 
 
         <LinearLayout
+            android:background="#7E32302C"
             android:id="@+id/left_pane"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -66,11 +67,14 @@
 
 
         <LinearLayout
-            android:id="@+id/right_pane"
+            android:id="@+id/vehicle_detail_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_margin="-30dp"
             >
+
+            <!--<include layout="@layout/vehicle_detail"/>
 
             <TextView
                 android:id="@+id/make_model"
@@ -121,7 +125,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/border"
                 android:text="@string/last_update"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
+                app:layout_constraintTop_toBottomOf="@+id/description" />-->
 
         </LinearLayout>
 

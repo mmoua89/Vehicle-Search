@@ -1,11 +1,15 @@
 package com.example.vehiclesearch;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -120,13 +124,14 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
 
         //If statement that checks if the rightPane is currently not null, will enter if it's not null
-        if (findViewById(R.id.right_pane) != null) {
+        if (findViewById(R.id.vehicle_detail_container) != null) {
             //Initialized isHasTwoPane to true
             isHasTwoPane = true;
         }
 
         //Executes the GetMakes class
         new GetMakes().execute();
+
     }
 
     /**
@@ -183,28 +188,58 @@ public class MainActivity extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(
                     context, R.layout.my_custom_dropdown, vehicleMake);
 
-            //makeSpin will now consist of all the make types
-            makeSpin.setAdapter(adapter);
+            // If the screen is large enough
+            if(isHasTwoPane){
+                Spinner makeSpinTwoPane = findViewById(R.id.spinner1);
+                makeSpinTwoPane.setAdapter(adapter);
 
-            //Listener that will listen to the user input
-            makeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                //Will enter this method if the user chooses something
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    //Grabs the vehicleID from the array list and stores it into makeID which will be used in the GetModel class
-                    makeID = vehicleID.get(position);
+                //Listener that will listen to the user input
+                makeSpinTwoPane.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    //Will enter this method if the user chooses something
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //Grabs the vehicleID from the array list and stores it into makeID which will be used in the GetModel class
+                        makeID = vehicleID.get(position);
 
-                    //Executes the GetModel class
-                    new GetModel().execute();
+                        //Executes the GetModel class
+                        new GetModel().execute();
 
-                }
+                    }
 
-                @Override
-                //onNothingSelected will not contain any code
-                public void onNothingSelected(AdapterView<?> parent) {
+                    @Override
+                    //onNothingSelected will not contain any code
+                    public void onNothingSelected(AdapterView<?> parent) {
 
-                }
-            });
+                    }
+                });
+            }
+            else{
+                //makeSpin will now consist of all the make types
+                makeSpin.setAdapter(adapter);
+
+                //Listener that will listen to the user input
+                makeSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    //Will enter this method if the user chooses something
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //Grabs the vehicleID from the array list and stores it into makeID which will be used in the GetModel class
+                        makeID = vehicleID.get(position);
+
+                        //Executes the GetModel class
+                        new GetModel().execute();
+
+                    }
+
+                    @Override
+                    //onNothingSelected will not contain any code
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+            }
+
+
         }
 
     }
@@ -274,27 +309,55 @@ public class MainActivity extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(
                     context, R.layout.my_custom_dropdown, vehicleModel);
 
-            //makeSpin will now consist of all the model types for the specific make vehicle
-            modelSpin.setAdapter(adapter);
+            if (isHasTwoPane){
+                Spinner modelSpinTwoPane = findViewById(R.id.spinner2);
+                modelSpinTwoPane.setAdapter(adapter);
 
-            //Listener that will listen to the user input of the model spinner
-            modelSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                //Will enter this method if the user chooses an item from the model spinner
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    //vModelID integer variable will now be initialized to the model_id
-                    vModelID = model_id.get(position);
+                //Listener that will listen to the user input of the model spinner
+                modelSpinTwoPane.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    //Will enter this method if the user chooses an item from the model spinner
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //vModelID integer variable will now be initialized to the model_id
+                        vModelID = model_id.get(position);
 
-                    //Executes the GetAvailableVehicle class
-                    new GetAvailableVehicle().execute();
-                }
+                        //Executes the GetAvailableVehicle class
+                        new GetAvailableVehicle().execute();
+                    }
 
-                @Override
-                //This method will not contain code
-                public void onNothingSelected(AdapterView<?> parent) {
+                    @Override
+                    //This method will not contain code
+                    public void onNothingSelected(AdapterView<?> parent) {
 
-                }
-            });
+                    }
+                });
+            }
+            else{
+                //makeSpin will now consist of all the model types for the specific make vehicle
+                modelSpin.setAdapter(adapter);
+
+                //Listener that will listen to the user input of the model spinner
+                modelSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    //Will enter this method if the user chooses an item from the model spinner
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        //vModelID integer variable will now be initialized to the model_id
+                        vModelID = model_id.get(position);
+
+                        //Executes the GetAvailableVehicle class
+                        new GetAvailableVehicle().execute();
+                    }
+
+                    @Override
+                    //This method will not contain code
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+            }
+
+
         }
 
     }
@@ -396,6 +459,13 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
+            /*if (isHasTwoPane){
+
+            }
+            else{
+                recyclerView.setAdapter(new MyRecyclerViewAdapter(VehicleUtil.VEHICLE_LIST, isHasTwoPane));
+            }*/
+
             //RecyclerView adapter will call the setAdapter function that will send in MyReclycerViewAdapter
             //and contain vehiclelist and a boolean variable as paramter
             recyclerView.setAdapter(new MyRecyclerViewAdapter(VehicleUtil.VEHICLE_LIST, isHasTwoPane));
@@ -403,5 +473,138 @@ public class MainActivity extends AppCompatActivity {
             //Display a toast message of the URL
             //Toast.makeText(context, newURL, Toast.LENGTH_LONG).show();
         }
+    }
+
+
+
+
+
+
+    public class MyRecyclerViewAdapter extends RecyclerView.Adapter <MyRecyclerViewAdapter.ViewHolder> {
+
+        //List of vehicle objects
+        private final List<VehicleUtil.Vehicle> vehicleList;
+
+        //Boolean variable that will be storing the status of the TwoPane
+        private boolean isHasTwoPane;
+
+        //Default constructor that will initialized the vehicleList to v and this thisHasTwoPane to isHasTwoPane
+        MyRecyclerViewAdapter(List<VehicleUtil.Vehicle> v, boolean isHasTwoPane) {
+            this.vehicleList = v;
+            this.isHasTwoPane = isHasTwoPane;
+        }
+
+        @NonNull
+        @Override
+        //onCreateViewHolder function that will inflate the View and return the view to the caller
+        public MyRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.vehicle_list_content, parent, false);
+            return new MyRecyclerViewAdapter.ViewHolder(view);
+        }
+
+        @Override
+        //onBindViewHolder method that will be passing information to the fragments
+        public void onBindViewHolder(final MyRecyclerViewAdapter.ViewHolder holder, int position) {
+
+            //Initializes the newVehicle object to the current vehicleList object
+            holder.newVehicle = vehicleList.get(position);
+
+            //Sets the ID to the position incremented by 1
+            holder.viewID.setText(String.valueOf(position + 1));
+
+            //Sets the display bar of all the vehicles
+            holder.contentView.setText(vehicleList.get(position).getDisplayBar());
+
+            //If a vehicle is selected, it will enter this
+            holder.view.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+
+                    if (isHasTwoPane){
+                    int selectedImage = holder.getAdapterPosition();
+                    int selectedMakeAndModel = holder.getAdapterPosition();
+                    int selectedPrice = holder.getAdapterPosition();
+                    int selectedDescription = holder.getAdapterPosition();
+                    int selectedLastUpdate = holder.getAdapterPosition();
+                    VehicleFragment fragment = VehicleFragment.newInstance(
+                            selectedImage, selectedMakeAndModel, selectedPrice,
+                            selectedDescription, selectedLastUpdate);
+                    getSupportFragmentManager().beginTransaction().replace(
+                            R.id.vehicle_detail_container, fragment).addToBackStack(null).commit();
+
+
+                    }
+                    else {
+                        //Grabs the current context
+                        Context context = v.getContext();
+
+                        //Declares an Intent variable that will be used to communicate with the fragment
+                        Intent intent = new Intent(context, VehicleDetailActivity.class);
+
+                        //Intent will send the vehicle image to the fragment
+                        intent.putExtra(VehicleUtil.VEHICLE_IMAGE, holder.getAdapterPosition());
+
+                        //Intent will send the make and model to the fragment
+                        intent.putExtra(VehicleUtil.MAKE_MODEL, holder.getAdapterPosition());
+
+                        //Intent will send the price to the fragment
+                        intent.putExtra(VehicleUtil.PRICE, holder.getAdapterPosition());
+
+                        //Intent will send the description to the fragment
+                        intent.putExtra(VehicleUtil.DESCRIPTION, holder.getAdapterPosition());
+
+                        //Intent will send the last updated message to the fragment
+                        intent.putExtra(VehicleUtil.LAST_UPDATE, holder.getAdapterPosition());
+
+                        //Starts the activity
+                        context.startActivities(new Intent[]{intent});
+                    }
+                }
+            });
+        }
+
+        // count the numbers of vehicles
+        @Override
+        public int getItemCount() {
+            return vehicleList.size();
+        }
+
+        /**
+         * ViewHolder class that extend the RecyclerView
+         */
+        class ViewHolder extends RecyclerView.ViewHolder {
+            final View view;
+            final TextView viewID;
+            final TextView contentView;
+            VehicleUtil.Vehicle newVehicle;
+
+            /**
+             * Assigning keys
+             * @param itemView
+             */
+            public ViewHolder(View itemView) {
+                super(itemView);
+                view = itemView;
+                viewID = view.findViewById(R.id.id);
+                contentView = view.findViewById(R.id.content);
+            }
+        }
+
+
+   /* class Link extends AppCompatActivity {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.vehicle_list);
+
+            if (isHasTwoPane){
+                ImageView imageView = findViewById(R.id.imageView2);
+            }
+
+
+    }*/
+
     }
 }

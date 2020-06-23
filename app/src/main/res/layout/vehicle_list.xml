@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="@android:color/secondary_text_dark_nodisable"
+        android:backgroundTint="#7E32302C"
         android:orientation="vertical"
         android:background="@drawable/border"
         >

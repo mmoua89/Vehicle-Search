@@ -54,9 +54,16 @@ public class VehicleDetailActivity extends AppCompatActivity {
             VehicleFragment fragment = VehicleFragment.newInstance(selectedImage, selectedMakeAndModel,
                     selectedPrice, selectedDescription, selectedLastUpdate);
 
-            //Initiates the fragment
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.song_detail_container, fragment).commit();
+            /*if (isHasTwoPane){
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.right_pane, fragment).commit();
+            }
+            else{*/
+                //Initiates the fragment
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.vehicle_detail_container, fragment).commit();
+            //}
+
         }
     }
 
